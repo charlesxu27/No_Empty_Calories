@@ -2,7 +2,7 @@ import * as React from "react"
 import { nutritionFacts } from "../../constants"
 import "./NutritionalLabel.css"
 
-export function NutritionalLabel(props) {
+export function NutritionalLabel({item=""}) {
   return (
     <div className="nutritional-label">
       <h3 className="title">Nutrition Facts</h3>

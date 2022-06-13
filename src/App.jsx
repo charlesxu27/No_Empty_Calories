@@ -27,8 +27,10 @@ const { data, categories, restaurants } = createDataSet()
 export function App() {
   const [category, setCategory] = useState()
   const [restaurant, setRestaurant] = useState()
+  let currentMenuItems = data.filter(() => {return (data.food_category == category && data.restaurant == restaurant)})
+  const [selectedMenuItem, setSelectedMenuItem] = useState()
 
-  return (
+  return ( // rerendered when state variable is changed
     <main className="App">
       {/* CATEGORIES COLUMN */}
       <div className="CategoriesColumn col">
@@ -38,6 +40,8 @@ export function App() {
             let active = (cat == category ? true : false)
             return (<Chip label={cat} key={index} isActive={active} onClick={() => {
               setCategory(cat)
+              console.log(`Clicked Category is: ${cat}`) // ex. "Entree"
+              console.log(`State Category is: ${category}`) // undefined 
             }}/>)
           }
           )}
@@ -55,6 +59,8 @@ export function App() {
             let active = (rest == restaurant ? true : false)
             return (<Chip label={rest} key={index} isActive={active} onClick={() => {
               setRestaurant(rest)
+              console.log(`Clicked Restaurant is: ${rest}`)
+              console.log(`State Restraurant is: ${restaurant}`)
             }}/>)
           }
           )}</div>
@@ -66,7 +72,11 @@ export function App() {
         <div className="MenuDisplay display">
           <div className="MenuItemButtons menu-items">
             <h2 className="title">Menu Items</h2>
-            {/* YOUR CODE HERE */}
+            {currentMenuItems.map((menuItem, index) => {
+              return <Chip label={menuItem} key={index} onClick={() => {
+                setSelectedMenuItem(menuItem)
+              }}/>
+            })}
           </div>
 
           {/* NUTRITION FACTS */}
