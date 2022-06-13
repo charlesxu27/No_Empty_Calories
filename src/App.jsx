@@ -1,5 +1,6 @@
 import * as React from "react"
 // IMPORT ANY NEEDED COMPONENTS HERE
+import { useState } from "react"
 import { createDataSet } from "./data/dataset"
 import "./App.css"
 import Header from "./components/Header/Header"
@@ -22,18 +23,24 @@ export const appInfo = {
 // or this!
 const { data, categories, restaurants } = createDataSet()
 
+
 export function App() {
+  const [category, setCategory] = useState()
+  const [restaurant, setRestaurant] = useState()
+
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
       <div className="CategoriesColumn col">
         <div className="categories options">
           <h2 className="title">Categories</h2>
-          {/* YOUR CODE HERE */}
-          {categories.map((category, index) => (
-            <p key={index}>{category}</p>
-            // <Chip label={category} key={category}/>
-          ))}
+          {categories.map((cat, index) => {
+            let active = (cat == category ? true : false)
+            return (<Chip label={cat} key={index} isActive={active} onClick={() => {
+              setCategory(cat)
+            }}/>)
+          }
+          )}
         </div>
       </div>
 
@@ -44,9 +51,13 @@ export function App() {
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
           <h2 className="title">Restaurants</h2>
-          <div className="restaurants options">{restaurants.map((restaurant, index) => (
-            <p key={index}>{restaurant}</p>
-          ))}</div>
+          <div className="restaurants options">{restaurants.map((rest, index) => {
+            let active = (rest == restaurant ? true : false)
+            return (<Chip label={rest} key={index} isActive={active} onClick={() => {
+              setRestaurant(rest)
+            }}/>)
+          }
+          )}</div>
         </div>
 
         <Instructions instr={appInfo}/>
