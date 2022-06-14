@@ -6,6 +6,7 @@ import "./App.css"
 import Header from "./components/Header/Header"
 import Instructions from "./components/Instructions/Instructions"
 import Chip from "./components/Chip/Chip"
+import NutritionalLabel from "./components/NutritionalLabel/NutritionalLabel"
 // don't move this!
 export const appInfo = {
   title: `Fast Food Feud 🍔!`,
@@ -25,10 +26,11 @@ const { data, categories, restaurants } = createDataSet()
 
 
 export function App() {
-  const [category, setCategory] = useState()
   const [restaurant, setRestaurant] = useState()
-  let currentMenuItems = data.filter(() => {return (data.food_category == category && data.restaurant == restaurant)})
+  const [category, setCategory] = useState()
   const [selectedMenuItem, setSelectedMenuItem] = useState()
+
+  const currentMenuItems = data.filter(item => {return (item.food_category == category && item.restaurant == restaurant)})
 
   return ( // rerendered when state variable is changed
     <main className="App">
@@ -60,7 +62,7 @@ export function App() {
             return (<Chip label={rest} key={index} isActive={active} onClick={() => {
               setRestaurant(rest)
               console.log(`Clicked Restaurant is: ${rest}`)
-              console.log(`State Restraurant is: ${restaurant}`)
+              console.log(`State Restaurant is: ${restaurant}`)
             }}/>)
           }
           )}</div>
@@ -72,11 +74,16 @@ export function App() {
         <div className="MenuDisplay display">
           <div className="MenuItemButtons menu-items">
             <h2 className="title">Menu Items</h2>
-            {currentMenuItems.map((menuItem, index) => {
-              return <Chip label={menuItem} key={index} onClick={() => {
-                setSelectedMenuItem(menuItem)
-              }}/>
-            })}
+            <div className="menu-items">
+              {console.log("Displaying currentMenuItems")}
+              {currentMenuItems.map((menuItem, index) => {
+                return (<Chip label={menuItem.item_name} key={index} onClick={() => {
+                  setSelectedMenuItem(menuItem)
+                  console.log(`Selected Menu Item is ${menuItem}`)
+                  console.log(`State Menu Item is ${selectedMenuItem}`)
+                }}/>)
+              })}
+            </div>
           </div>
 
           {/* NUTRITION FACTS */}
