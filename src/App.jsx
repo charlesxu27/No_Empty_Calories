@@ -26,11 +26,11 @@ const { data, categories, restaurants } = createDataSet()
 
 
 export function App() {
-  const [restaurant, setRestaurant] = useState()
-  const [category, setCategory] = useState()
+  const [selectedRestaurant, setRestaurant] = useState()
+  const [selectedCategory, setCategory] = useState()
   const [selectedMenuItem, setSelectedMenuItem] = useState()
 
-  const currentMenuItems = data.filter(item => { return (item.food_category == category && item.restaurant == restaurant) })
+  const currentMenuItems = data.filter(item => { return (item.food_category == selectedCategory && item.restaurant == selectedRestaurant) })
 
   function getInstructionStatus(stateRestaurant, stateCategory, stateSelected) {
     if (!stateRestaurant && !stateCategory && !stateSelected) {
@@ -57,11 +57,11 @@ export function App() {
         <div className="categories options">
           <h2 className="title">Categories</h2>
           {categories.map((cat, index) => {
-            let active = (cat == category ? true : false)
+            let active = (cat == selectedCategory ? true : false)
             return (<Chip label={cat} key={index} isActive={active} onClick={() => {
               setCategory(cat)
               console.log(`Clicked Category is: ${cat}`) // ex. "Entree"
-              console.log(`State Category is: ${category}`) // undefined 
+              console.log(`State Category is: ${selectedCategory}`) // undefined 
             }} onClose={(e) => {
               console.log("CLOSED")
               e.stopPropagation()
@@ -74,17 +74,17 @@ export function App() {
 
       {/* MAIN COLUMN */}
       <div className="container">
-        <Header header={appInfo} />
+        <Header title={appInfo.title} tagline={appInfo.tagline} description={appInfo.description}  />
 
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
           <h2 className="title">Restaurants</h2>
           <div className="restaurants options">{restaurants.map((rest, index) => {
-            let active = (rest == restaurant ? true : false)
+            let active = (rest == selectedRestaurant ? true : false)
             return (<Chip label={rest} key={index} isActive={active} onClick={() => {
               setRestaurant(rest)
               console.log(`Clicked Restaurant is: ${rest}`)
-              console.log(`State Restaurant is: ${restaurant}`)
+              console.log(`State Restaurant is: ${selectedRestaurant}`)
             }} onClose={(e) => {
               console.log("CLOSED")
               e.stopPropagation()
@@ -93,7 +93,7 @@ export function App() {
           }
           )}</div>
         </div>
-         <Instructions data={appInfo} status={getInstructionStatus(restaurant, category, selectedMenuItem)} />
+         <Instructions data={appInfo} status={getInstructionStatus(selectedRestaurant, selectedCategory, selectedMenuItem)} />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
