@@ -6,7 +6,7 @@ import "./App.css"
 import Header from "./components/Header/Header"
 import Instructions from "./components/Instructions/Instructions"
 import Chip from "./components/Chip/Chip"
-import NutritionalLabel from "./components/NutritionalLabel/NutritionalLabel"
+import NutritionalLabel, { NutritionalLabelFact } from "./components/NutritionalLabel/NutritionalLabel"
 // don't move this!
 export const appInfo = {
   title: `Fast Food Feud 🍔!`,
@@ -30,7 +30,7 @@ export function App() {
   const [category, setCategory] = useState()
   const [selectedMenuItem, setSelectedMenuItem] = useState()
 
-  const currentMenuItems = data.filter(item => {return (item.food_category == category && item.restaurant == restaurant)})
+  const currentMenuItems = data.filter(item => { return (item.food_category == category && item.restaurant == restaurant) })
 
   return ( // rerendered when state variable is changed
     <main className="App">
@@ -44,7 +44,7 @@ export function App() {
               setCategory(cat)
               console.log(`Clicked Category is: ${cat}`) // ex. "Entree"
               console.log(`State Category is: ${category}`) // undefined 
-            }}/>)
+            }} />)
           }
           )}
         </div>
@@ -52,7 +52,7 @@ export function App() {
 
       {/* MAIN COLUMN */}
       <div className="container">
-        <Header header={appInfo}/>
+        <Header header={appInfo} />
 
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
@@ -63,12 +63,12 @@ export function App() {
               setRestaurant(rest)
               console.log(`Clicked Restaurant is: ${rest}`)
               console.log(`State Restaurant is: ${restaurant}`)
-            }}/>)
+            }} />)
           }
           )}</div>
         </div>
 
-        <Instructions instr={appInfo}/>
+        <Instructions instr={appInfo} />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
@@ -81,13 +81,15 @@ export function App() {
                   setSelectedMenuItem(menuItem)
                   console.log(`Selected Menu Item is ${menuItem}`)
                   console.log(`State Menu Item is ${selectedMenuItem}`)
-                }}/>)
+                }} />)
               })}
             </div>
           </div>
 
           {/* NUTRITION FACTS */}
-          <div className="NutritionFacts nutrition-facts">{/* YOUR CODE HERE */}</div>
+          <div className="NutritionFacts nutrition-facts">
+            {selectedMenuItem ? <NutritionalLabel item={selectedMenuItem}/> : console.log("No item selected")}
+          </div>
         </div>
 
         <div className="data-sources">
