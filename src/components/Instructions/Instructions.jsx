@@ -1,10 +1,10 @@
 import * as React from "react"
 import "./Instructions.css"
 
-export function Instructions({data={}, status="start"}) {
+export function Instructions({instructions="start"}) {
   return (
     <aside className="instructions">
-      <p>{data[status]}</p>
+      <p>{instructions}</p>
     </aside>
   )
 }

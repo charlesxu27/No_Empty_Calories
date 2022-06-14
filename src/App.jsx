@@ -34,19 +34,19 @@ export function App() {
 
   function getInstructionStatus(stateRestaurant, stateCategory, stateSelected) {
     if (!stateRestaurant && !stateCategory && !stateSelected) {
-      return "start"
+      return appInfo.instructions.start
     }
     else if (stateRestaurant && !stateCategory && !stateSelected) {
-      return "onlyRestaurant"
+      return appInfo.instructions.onlyRestaurant
     }
     else if (!stateRestaurant && stateCategory && !stateSelected) {
-      return "onlyCategory"
+      return appInfo.instructions.onlyCategory
     }
     else if (stateRestaurant && stateCategory && !stateSelected) {
-      return "noSelectedItem"
+      return appInfo.instructions.noSelectedItem
     }
     else {
-      return "allSelected"
+      return appInfo.instructions.allSelected
     }
   }
 
@@ -93,7 +93,8 @@ export function App() {
           }
           )}</div>
         </div>
-         <Instructions data={appInfo.instructions} status={getInstructionStatus(selectedRestaurant, selectedCategory, selectedMenuItem)} />
+
+         <Instructions instructions={getInstructionStatus(selectedRestaurant, selectedCategory, selectedMenuItem)} />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
@@ -102,7 +103,7 @@ export function App() {
             <div className="menu-items">
               {console.log("Displaying currentMenuItems")}
               {currentMenuItems.map((menuItem, index) => {
-                return (<Chip label={menuItem.item_name} key={index} onClick={() => {
+                return (<Chip className="menu-items" label={menuItem.item_name} key={index} onClick={() => {
                   setSelectedMenuItem(menuItem)
                   console.log(`Selected Menu Item is ${menuItem}`)
                   console.log(`State Menu Item is ${selectedMenuItem}`)
