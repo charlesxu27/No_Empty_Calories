@@ -93,7 +93,7 @@ export function App() {
           }
           )}</div>
         </div>
-         <Instructions data={appInfo} status={getInstructionStatus(selectedRestaurant, selectedCategory, selectedMenuItem)} />
+         <Instructions data={appInfo.instructions} status={getInstructionStatus(selectedRestaurant, selectedCategory, selectedMenuItem)} />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
@@ -113,7 +113,7 @@ export function App() {
 
           {/* NUTRITION FACTS */}
           <div className="NutritionFacts nutrition-facts">
-            {selectedMenuItem ? <NutritionalLabel item={selectedMenuItem}/> : console.log("No item selected")}
+            {selectedMenuItem ? (<NutritionalLabel item={selectedMenuItem}/>) : console.log("No item selected")}
           </div>
         </div>
 
