@@ -32,6 +32,24 @@ export function App() {
 
   const currentMenuItems = data.filter(item => { return (item.food_category == category && item.restaurant == restaurant) })
 
+  function getInstructionStatus(stateRestaurant, stateCategory, stateSelected) {
+    if (!stateRestaurant && !stateCategory && !stateSelected) {
+      return "start"
+    }
+    else if (stateRestaurant && !stateCategory && !stateSelected) {
+      return "onlyRestaurant"
+    }
+    else if (!stateRestaurant && stateCategory && !stateSelected) {
+      return "onlyCategory"
+    }
+    else if (stateRestaurant && stateCategory && !stateSelected) {
+      return "noSelectedItem"
+    }
+    else {
+      return "allSelected"
+    }
+  }
+
   return ( // rerendered when state variable is changed
     <main className="App">
       {/* CATEGORIES COLUMN */}
@@ -44,7 +62,11 @@ export function App() {
               setCategory(cat)
               console.log(`Clicked Category is: ${cat}`) // ex. "Entree"
               console.log(`State Category is: ${category}`) // undefined 
-            }} />)
+            }} onClose={(e) => {
+              console.log("CLOSED")
+              e.stopPropagation()
+              setCategory()
+            }}/>)
           }
           )}
         </div>
@@ -63,12 +85,15 @@ export function App() {
               setRestaurant(rest)
               console.log(`Clicked Restaurant is: ${rest}`)
               console.log(`State Restaurant is: ${restaurant}`)
+            }} onClose={(e) => {
+              console.log("CLOSED")
+              e.stopPropagation()
+              setRestaurant()
             }} />)
           }
           )}</div>
         </div>
-
-        <Instructions instr={appInfo} />
+         <Instructions data={appInfo} status={getInstructionStatus(restaurant, category, selectedMenuItem)} />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
